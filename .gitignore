@@ -100,7 +100,7 @@ ClientBin/
 *.[Pp]ublish.xml
 
 *.publishsettings
-
+.idea
 # RIA/Silverlight projects
 Generated_Code/
 
