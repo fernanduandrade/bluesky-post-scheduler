@@ -13,7 +13,7 @@ public class Job
     [Column("identifier")]
     public string JobId { get; set; }
     
-    [Column("scheduler_id")]
+    [Column("post_id")]
     public int SchedulerId { get; set; }
     
     [Column("created_at")]

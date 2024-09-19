@@ -1,6 +1,7 @@
 using AtScheduler.Common.Interfaces;
 using AtScheduler.Contracts.Jobs;
 using AtScheduler.Contracts.Posts;
+using AtScheduler.ExternalServices;
 using Hangfire;
 using Newtonsoft.Json;
 using Job = AtScheduler.Contracts.Jobs.Job;
@@ -14,7 +15,7 @@ public interface IJobService
 }
 
 public class JobService(IBackgroundJobClient backgroundJobClient, IScheduler scheduler, IUnitOfWork unitOfWork,
-    IJobRepository jobRepository) : IJobService
+    IJobRepository jobRepository, IBlueSkyService blueSkyService) : IJobService
 {
     public async Task CreateAndStartJob(string message)
     {
@@ -24,7 +25,7 @@ public class JobService(IBackgroundJobClient backgroundJobClient, IScheduler sch
         var newJob = Job.Create(jobId, newScheduler.Id);
         jobRepository.Add(newJob);
         await unitOfWork.CommitAsync();
-        scheduler.Publish(jobId, () => Console.WriteLine($"executando {newScheduler.Content}"), newScheduler.Timer);
+        scheduler.Publish(jobId, () => blueSkyService.SendPost(newScheduler.Id), newScheduler.Timer);
     }
     
     public async Task<Job> GetBySchedulerId(int id)

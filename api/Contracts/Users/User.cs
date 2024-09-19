@@ -21,4 +21,14 @@ public class User
     
     [Column("inserted_at")]
     public DateTime InsertedAt { get; set; }
+
+    public static User Create(string handler, string password, string did)
+    {
+        return new User()
+        {
+            Handler = handler,
+            Password = password,
+            Did = did
+        };
+    }
 }

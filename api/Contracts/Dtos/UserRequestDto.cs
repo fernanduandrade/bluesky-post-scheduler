@@ -1,3 +1,4 @@
 namespace AtScheduler.Contracts.Dtos;
 
-public record UserRequestDto();
+public sealed record UserRequestDto(
+    string Handler, string Password);

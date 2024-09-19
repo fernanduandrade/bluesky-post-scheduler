@@ -1,3 +1,4 @@
 namespace AtScheduler.Contracts.Dtos;
 
-public record UserResponseDto();
+public sealed record UserResponseDto(
+    int Id, string Handler, DateTime CreatedAt);

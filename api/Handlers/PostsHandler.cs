@@ -6,7 +6,7 @@ namespace AtScheduler.Handlers;
 
 public static class PostsHandler
 {
-    internal static async Task<IResult> Create([FromBody] SchedulerRequestDto request, [FromServices] IPostService postService)
+    internal static async Task<IResult> Create([FromBody] PostRequestDto request, [FromServices] IPostService postService)
     {
         var result = await postService.Create(request);
         if (result.IsSuccess)

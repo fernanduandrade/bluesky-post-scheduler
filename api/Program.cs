@@ -5,7 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddHttpClient();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddPersistence();
 builder.Services.AddHanfireConfiguration();
 builder.Services.AddServices();
@@ -17,11 +18,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-var schedulers = app.MapGroup("api/schedulers");
+var posts = app.MapGroup("api/posts");
+var users = app.MapGroup("api/users");
 
-schedulers.MapPost("", SchedulersHandler.Create);
-schedulers.MapGet("", SchedulersHandler.Get);
-schedulers.MapDelete("{id}", SchedulersHandler.Delete);
+posts.MapPost("", PostsHandler.Create);
+posts.MapGet("", PostsHandler.Get);
+posts.MapDelete("{id}", PostsHandler.Delete);
+users.MapPost("", UsersHandler.Create);
+app.UseMiddleware<BlueSkyAuthMiddleware>();
 
 app.AddHangireDash();
 app.UseHttpsRedirection();

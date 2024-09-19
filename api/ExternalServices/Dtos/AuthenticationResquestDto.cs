@@ -1,6 +1,3 @@
 namespace AtScheduler.ExternalServices.Dtos;
 
-public class AuthenticationResquestDto
-{
-    
-}
+public sealed record AuthenticationResquestDto(string Identifier, string Password);
